@@ -178,7 +178,7 @@ class HeaderIcon extends StatelessWidget {
   }
 }
 
-class InputContainer extends StatefulWidget {
+class InputContainer extends StatelessWidget {
   final String placeHolderText;
   final double newWidth;
   final TextEditingController controller;
@@ -196,31 +196,27 @@ class InputContainer extends StatefulWidget {
       required this.valid,
       required this.onchange});
   @override
-  _InputContainerState createState() => _InputContainerState();
-}
-
-class _InputContainerState extends State<InputContainer> {
-  @override
   Widget build(BuildContext context) {
     return Container(
-      width: widget.newWidth,
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height * 0.09,
+      width: newWidth,
       margin: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: Colors.white,
       ),
-      padding: EdgeInsets.all(6),
       child: TextFormField(
         onChanged: (val) {
-          widget.onchange(val);
+          onchange(val);
         },
         textInputAction: TextInputAction.next,
         validator: (val) {
-          widget.valid(val);
+          return valid(val);
         },
-        obscureText: widget.obscureTextValue,
-        keyboardType: widget.keyboardType,
-        controller: widget.controller,
+        obscureText: obscureTextValue,
+        keyboardType: keyboardType,
+        controller: controller,
         cursorColor: Colors.black,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -230,7 +226,7 @@ class _InputContainerState extends State<InputContainer> {
           disabledBorder: InputBorder.none,
           contentPadding:
               EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-          hintText: widget.placeHolderText,
+          hintText: placeHolderText,
         ),
       ),
     );

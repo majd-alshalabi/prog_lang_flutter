@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prog_languages_flutter/view/mainScreenView.dart';
 import 'view/accountScreens/SigninScreen.dart';
-
 import 'view/accountScreens/RegisterScreen.dart';
 
 void main() {
@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         SigninScreen.id: (BuildContext context) => SigninScreen(),
+        MainScreen.id: (BuildContext context) => MainScreen(),
         RegisterScreen.id: (BuildContext context) => RegisterScreen(),
       },
       theme: ThemeData(
