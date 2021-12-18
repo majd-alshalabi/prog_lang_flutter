@@ -4,11 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prog_languages_flutter/shared/cubit/cubit.dart';
 import 'package:prog_languages_flutter/shared/cubit/cubitstate.dart';
 import '../../shared/constant.dart';
+import '../mainScreenView.dart';
 
 class RegisterScreen extends StatelessWidget {
   static final id = 'consumerRegisterScreen';
 
   final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passwordController = TextEditingController();
 
@@ -55,9 +58,27 @@ class RegisterScreen extends StatelessWidget {
                                 } else
                                   return null;
                               },
-                              keyboardType: TextInputType.emailAddress,
+                              keyboardType: TextInputType.text,
                               controller: nameController,
-                              placeHolderText: 'اسم المستخدم او الايميل',
+                              placeHolderText: 'name',
+                              newWidth:
+                                  4 * MediaQuery.of(context).size.width / 5,
+                              obscureTextValue: false,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            InputContainer(
+                              onchange: (value) {},
+                              valid: (value) {
+                                if (value == '' || value.isEmpty) {
+                                  return 'Please enter some text';
+                                } else
+                                  return null;
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emailController,
+                              placeHolderText: 'email',
                               newWidth:
                                   4 * MediaQuery.of(context).size.width / 5,
                               obscureTextValue: false,
@@ -75,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                               },
                               obscureTextValue: true,
                               controller: passwordController,
-                              placeHolderText: 'كلمة السر',
+                              placeHolderText: 'paswword',
                               newWidth:
                                   4 * MediaQuery.of(context).size.width / 5,
                               keyboardType: TextInputType.text,
@@ -93,7 +114,7 @@ class RegisterScreen extends StatelessWidget {
                               },
                               obscureTextValue: true,
                               controller: confirmController,
-                              placeHolderText: 'تأكيد كلمة السر',
+                              placeHolderText: 'confirm password',
                               newWidth:
                                   4 * MediaQuery.of(context).size.width / 5,
                               keyboardType: TextInputType.text,
@@ -117,7 +138,28 @@ class RegisterScreen extends StatelessWidget {
                                 child: MaterialButton(
                                   minWidth:
                                       2 * MediaQuery.of(context).size.width / 5,
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      bool response = await MyCubit.get(context)
+                                          .register(
+                                              nameController.text,
+                                              emailController.text,
+                                              passwordController.text);
+                                      if (response) {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => MainScreen(
+                                                email: emailController.text,
+                                                name: nameController.text,
+                                                token:
+                                                    MyCubit.get(context).token,
+                                              ),
+                                            ),
+                                            (route) => true);
+                                      }
+                                    }
+                                  },
                                   height: 42.0,
                                   child: state is LoadingState
                                       ? CircularProgressIndicator()

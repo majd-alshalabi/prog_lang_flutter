@@ -54,7 +54,7 @@ class SigninScreen extends StatelessWidget {
                               if (value.isEmpty)
                                 return 'this field must not be empty';
                               else
-                                return '';
+                                return null;
                             },
                             keyboardType: TextInputType.emailAddress,
                             placeHolderText: 'email',
@@ -71,7 +71,7 @@ class SigninScreen extends StatelessWidget {
                               if (value == '' || value.length <= 5)
                                 return 'password must be more than 5 Letters';
                               else
-                                return '';
+                                return null;
                             },
                             obscureTextValue: true,
                             placeHolderText: 'password',
@@ -97,8 +97,16 @@ class SigninScreen extends StatelessWidget {
                                       .login(emailController.text,
                                           passwordController.text);
                                   if (response) {
-                                    Navigator.pushReplacementNamed(
-                                        context, MainScreen.id);
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MainScreen(
+                                            email: emailController.text,
+                                            name: MyCubit.get(context).usename,
+                                            token: MyCubit.get(context).token,
+                                          ),
+                                        ),
+                                        (route) => true);
                                   }
                                 }
                               },

@@ -16,3 +16,7 @@ class LoadingState extends CubitStates {}
 class NoSuchAccount extends CubitStates {}
 
 class FailureState extends CubitStates {}
+
+class AlreadyInUseState extends CubitStates {}
+
+class NoCachedDataState extends CubitStates {}
