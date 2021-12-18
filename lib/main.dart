@@ -28,7 +28,6 @@ class _MyAppState extends State<MyApp> {
   bool initLoadingBool = false;
   bool initScreen = false;
   void initFunc() async {
-    await Future.delayed(const Duration(milliseconds: 100), () {});
     token = await SharedPre.getToken();
     if (token == '') {
       initScreen = false;
